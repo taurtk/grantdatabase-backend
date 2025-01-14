@@ -35,13 +35,14 @@ exports.loginUser = async (req, res) => {
 
 // Create Payment Intent
 exports.createPaymentIntent = async (req, res) => {
-    const { amount, currency, description } = req.body;
+    const { amount, currency, description, shipping } = req.body;
 
     try {
         const paymentIntent = await stripe.paymentIntents.create({
             amount,
             currency,
             description,
+            shipping,
         });
 
         res.status(200).json({ clientSecret: paymentIntent.client_secret });
