@@ -35,14 +35,18 @@ exports.loginUser = async (req, res) => {
 
 // Create Payment Intent
 exports.createPaymentIntent = async (req, res) => {
-    const { amount } = req.body; // Amount in cents
+    const { amount, currency, description } = req.body;
+
     try {
         const paymentIntent = await stripe.paymentIntents.create({
             amount,
-            currency: 'cad',
+            currency,
+            description,
         });
-        res.json({ clientSecret: paymentIntent.client_secret });
+
+        res.status(200).json(paymentIntent);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error creating payment intent:', error);
+        res.status(500).json({ error: 'Failed to create payment intent' });
     }
 }; 
