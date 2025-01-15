@@ -1,10 +1,14 @@
 const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+        // Retrieve the token from local storage or wherever you store it
+        const token = localStorage.getItem('token'); // Adjust this based on your implementation
+
         const response = await fetch('https://grantdatabase-backend.onrender.com/api/grants/match', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, // Include the token in the Authorization header
             },
             body: JSON.stringify(profile),
         });

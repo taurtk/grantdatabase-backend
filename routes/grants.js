@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post('/', createGrant);
 router.get('/', getAllGrants);
-router.post('/match', authMiddleware, accessControl, matchGrants);
+router.post('/match', authMiddleware, matchGrants);
 
 module.exports = router; 
