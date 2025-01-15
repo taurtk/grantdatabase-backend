@@ -23,19 +23,20 @@ exports.getAllGrants = async (req, res) => {
 
 // Match Grants
 exports.matchGrants = async (req, res) => {
-    const { criteria } = req.body; // Criteria from user input
-    console.log('Matching Criteria:', criteria);
+    const profile = req.body;
+
     try {
-        const grants = await Grant.find();
-        console.log('All Grants:', grants); // Log all grants
-        const matchedGrants = grants.filter(grant => {
-            const eligibilityMatch = grant.eligibility.toLowerCase().includes(criteria.eligibility.toLowerCase());
-            const keywordMatch = grant.name.toLowerCase().includes(criteria.keywords.toLowerCase());
-            console.log(`Grant: ${grant.name}, Eligibility Match: ${eligibilityMatch}, Keyword Match: ${keywordMatch}`);
-            return eligibilityMatch && keywordMatch;
+        // Logic to find matching grants based on the profile
+        const matchingGrants = await Grant.find({
+            // Example matching logic (customize as needed)
+            fundingPurpose: profile.fundingPurpose,
+            sector: profile.sector,
+            // Add more matching criteria based on the profile
         });
-        res.json(matchedGrants);
+
+        res.status(200).json(matchingGrants);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error matching grants:', error);
+        res.status(500).json({ error: 'Failed to match grants' });
     }
 }; 
