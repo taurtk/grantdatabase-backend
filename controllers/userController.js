@@ -34,8 +34,6 @@ exports.loginUser = async (req, res) => {
 };
 
 // Create Payment Intent
-
-
 exports.createPaymentIntent = async (req, res) => {
     const { amount, currency, description, payment_method, shipping } = req.body;
 
