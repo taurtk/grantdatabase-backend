@@ -5,21 +5,25 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // Register User
 exports.registerUser = async (req, res) => {
+    console.log('RegisterUser function called'); // Log to confirm function is called
     const { email, password } = req.body;
 
-    console.log(email, password);
+    console.log('Registering user:', email); // Debugging log
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ email, password: hashedPassword });
 
     try {
         await user.save();
+        console.log('User saved successfully:', user); // Debugging log
 
         // Generate a JWT token
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        console.log('Generated Token:', token); // Debugging log
 
         // Send the token in the response
-        res.status(201).json({ message: 'User registered successfully', token });
+        res.status(201).json({ message: 'User registered successfully ghjkl', token });
     } catch (error) {
+        console.error('Error during registration:', error); // Log the error
         res.status(400).json({ error: error.message });
     }
 };

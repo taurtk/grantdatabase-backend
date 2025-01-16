@@ -11,6 +11,7 @@ const handleLogin = async () => {
     if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token); // Store the token
+        console.log('Token stored:', data.token); // Debugging log
     } else {
         // Handle login error
     }
