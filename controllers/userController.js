@@ -6,11 +6,11 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // Register User
 exports.registerUser = async (req, res) => {
     console.log('RegisterUser function called'); // Log to confirm function is called
-    const { email, password } = req.body;
+    const { email, password, profile } = req.body;
 
     console.log('Registering user:', email); // Debugging log
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ email, password: hashedPassword });
+    const user = new User({ email, password: hashedPassword, profile });
 
     try {
         await user.save();
